@@ -92,8 +92,8 @@ public class Sandwich implements Product{
                 productName.append(side).append("\t");
         }
         if (toasted)
-            productName.append("\nToasted\n");
-        productName.append("Total----------------------------------").append(getPrice());
+            productName.append("Toasted\n");
+        productName.append("Price_________________________________________________").append(getPrice());
 
         return productName.toString();
     }
