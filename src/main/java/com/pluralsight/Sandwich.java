@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 public class Sandwich implements Product{
     private final int size;
-    private Bread bread;
+    private final Bread bread;
     private Meat meat;
     private Cheese cheese;
     private HashSet<Topping> toppings;
@@ -17,21 +17,22 @@ public class Sandwich implements Product{
     private boolean toasted;
 
 
-    public Sandwich(int size, Bread bread, Meat meat, boolean extraMeat, Cheese cheese, boolean extraChees) {
+    public Sandwich(int size, Bread bread) {
         this.size = size;
         this.bread = bread;
-        this.meat = meat;
-        this.extraMeat = extraMeat;
-        this.cheese = cheese;
-        this.extraChees = extraChees;
         this.toppings = new HashSet<>();
-        this.sauces = new HashSet<>();
         this.sides = new HashSet<>();
+        this.sauces = new HashSet<>();
     }
-    public void toastTheSandwich(){this.toasted = true;}
+
+    public void addMeat(Meat meat){this.meat = meat;}
+    public void addExtraMeat(){this.extraMeat = true;}
+    public void addCheese(Cheese cheese){this.cheese = cheese;}
+    public void addExtraCheese(){this.extraChees = true;}
     public void addToppings(Topping topping){this.toppings.add(topping);}
     public void addSauce(Sauce sauce){this.sauces.add(sauce);}
     public void addSide(Side side){this.sides.add(side);}
+    public void toastTheSandwich(){this.toasted = true;}
 
 
     //Done: Create the method
@@ -40,7 +41,11 @@ public class Sandwich implements Product{
         double totalPrice = 0;
         switch (this.size){
             case 4->{
-                totalPrice += 7.25;
+                totalPrice += 5.50;
+                if (!(this.meat == null))
+                    totalPrice+=1;
+                if (!(this.cheese == null))
+                    totalPrice += 0.75;
                 if (extraMeat)
                     totalPrice += 0.50;
                 if (extraChees)
@@ -48,7 +53,11 @@ public class Sandwich implements Product{
                 return totalPrice;
             }
             case 8->{
-                totalPrice += 10.5;
+                totalPrice += 7;
+                if (!(this.meat == null))
+                    totalPrice+=2;
+                if (!(this.cheese == null))
+                    totalPrice += 1.50;
                 if (extraMeat)
                     totalPrice += 1;
                 if (extraChees)
@@ -56,7 +65,11 @@ public class Sandwich implements Product{
                 return totalPrice;
             }
             case 12->{
-                totalPrice += 13.75;
+                totalPrice += 8.5;
+                if (!(this.meat == null))
+                    totalPrice+=3;
+                if (!(this.cheese == null))
+                    totalPrice += 2.25;
                 if (extraMeat)
                     totalPrice += 1.50;
                 if (extraChees)
@@ -71,29 +84,33 @@ public class Sandwich implements Product{
     @Override
     public String getProductName() {
         StringBuilder productName = new StringBuilder();
-        productName.append("Sandwich Size: ").append(this.size).append(" Bread: ").append(this.bread).append(" Meat: ").append(this.meat).append(" Cheese: ").append(this.cheese).append("\n");
+        productName.append("Sandwich Size: ").append(this.size).append(" Bread: ").append(this.bread).append("\n");
+        if (!(this.meat == null))
+            productName.append("Meat: ").append(this.meat).append("\n");
+        if (!(this.cheese == null))
+            productName.append("Cheese: ").append(this.cheese).append("\n");
         if (extraMeat)
             productName.append("Extra meat\n");
         if (extraChees)
             productName.append("Extra cheese\n");
-        if(!toppings.isEmpty()) {
+        if(!this.toppings.isEmpty()) {
             productName.append("Toppings:\n");
             for (Topping topping : toppings)
-                productName.append(topping).append("\t");
+                productName.append(topping).append(" ");
         }
-        if (!sauces.isEmpty()) {
+        if (!this.sauces.isEmpty()) {
             productName.append("\nSauces:\n");
             for (Sauce sauce : sauces)
-                productName.append(sauce).append("\t");
+                productName.append(sauce).append(" ");
         }
-        if (!sides.isEmpty()){
+        if (!this.sides.isEmpty()){
             productName.append("\nSides:\n");
             for (Side side : sides)
-                productName.append(side).append("\t");
+                productName.append(side).append(" ");
         }
         if (toasted)
-            productName.append("Toasted\n");
-        productName.append("Price_________________________________________________").append(getPrice());
+            productName.append("\nToasted\n");
+        productName.append("Price_____________________________").append(getPrice());
 
         return productName.toString();
     }
