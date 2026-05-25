@@ -1,9 +1,6 @@
 package com.pluralsight;
 
-import com.pluralsight.enums.Bread;
-import com.pluralsight.enums.Cheese;
-import com.pluralsight.enums.Meat;
-import com.pluralsight.enums.Size;
+import com.pluralsight.enums.*;
 
 import java.util.Scanner;
 
@@ -110,10 +107,107 @@ public class ShopUI {
         Sandwich sandwich = new Sandwich(userSandwichSize, userSandwichBread);
         addMeat(sandwich);
         addCheese(sandwich);
-
+        addToppings(sandwich);
+        addSauces(sandwich);
+        addSides(sandwich);
 
         return sandwich;
     }
+
+    private void addSides(Sandwich sandwich) {
+        System.out.println("Would you like to add sides (Yes/No)");
+        if ((scanner.nextLine()).equalsIgnoreCase("no"))
+            return;
+        String menu = """
+                Please choose one of the followings:
+                1) Au Jus
+                2) Sauce
+                """;
+        while (true){
+            System.out.println(menu);
+            String userInput = scanner.nextLine();
+            switch (userInput){
+                case "1" -> sandwich.addSide(Side.AU_JUS);
+                case "2" -> sandwich.addSide(Side.SAUCE);
+                default -> System.err.println("No side added," +
+                        "Please choose correct option ");
+            }
+            System.out.println("Would you like to add more side");
+            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+                return;
+        }
+    }
+
+    private void addSauces(Sandwich sandwich) {
+        System.out.println("Would you like to add Sauces (Yes/No)");
+        if ((scanner.nextLine()).equalsIgnoreCase("no"))
+            return;
+        String menu = """
+                Please choose one of the following:
+                1) Mayo
+                2) Mustard
+                3) Ketchup
+                4) Ranch
+                5) Thousand Islands
+                6) Vinaigrette
+                """;
+        while (true){
+            System.out.println(menu);
+            String userInput = scanner.nextLine();
+            switch (userInput){
+                case "1" -> sandwich.addSauce(Sauce.MAYO);
+                case "2" -> sandwich.addSauce(Sauce.MUSTARD);
+                case "3" -> sandwich.addSauce(Sauce.KETCHUP);
+                case "4" -> sandwich.addSauce(Sauce.RANCH);
+                case "5" -> sandwich.addSauce(Sauce.THOUSAND_ISLANDS);
+                case "6" -> sandwich.addSauce(Sauce.VINAIGRETTE);
+                default -> System.err.println("No sauce added, " +
+                        "Please choose correct option.");
+            }
+            System.out.println("Would You like to add more Sauce (Yes/No)");
+            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+                return;
+        }
+    }
+
+    private void addToppings(Sandwich sandwich) {
+        System.out.println("Would you like to add toppings (yes/no)");
+        if ((scanner.nextLine().equalsIgnoreCase("no")))
+            return;
+        String menu = """
+                Please choose one followings:
+                1) Lettuce
+                2) Peppers
+                3) Onions
+                4) Tomatoes
+                5) Jalapenos
+                6) Cucumbers
+                7) Pikles
+                8) Guacamole
+                9) Mushrooms
+                """;
+        while (true){
+            System.out.println(menu);
+            String userInput = scanner.nextLine();
+            switch (userInput){
+                case "1" -> sandwich.addToppings(Topping.LETTUCE);
+                case "2" -> sandwich.addToppings(Topping.PEPPERS);
+                case "3" -> sandwich.addToppings(Topping.ONIONS);
+                case "4" -> sandwich.addToppings(Topping.TOMATOES);
+                case "5" -> sandwich.addToppings(Topping.JALAPENOS);
+                case "6" -> sandwich.addToppings(Topping.CUCUMBERS);
+                case "7" -> sandwich.addToppings(Topping.PICKLES);
+                case "8" -> sandwich.addToppings(Topping.GUACAMOLE);
+                case "9" -> sandwich.addToppings(Topping.MUSHROOMS);
+                default -> System.err.println("No topping added," +
+                        "Please choose correct option");
+            }
+            System.out.println("Would you like to add more toppings (yes/no)");
+            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+                return;
+        }
+    }
+
 
     private void addCheese(Sandwich sandwich) {
         System.out.println("Would you like to add Cheese (Yest/No)");
@@ -160,7 +254,7 @@ public class ShopUI {
                     return Cheese.SWISS;
                 }
                 default ->
-                        System.out.println("Plase choose correct option");
+                        System.err.println("Please choose correct option");
             }
 
         }
@@ -198,7 +292,7 @@ public class ShopUI {
                 case "6" -> {
                     return Meat.BACON;
                 }
-                default -> System.out.println("Please choose the correct Option.");
+                default -> System.err.println("Please choose the correct Option.");
             }
         }
     }
@@ -228,9 +322,8 @@ public class ShopUI {
                 case "4" ->{
                     return Bread.WRAP;
                 }
-                default ->
-                    System.out.println("Please choose the correct option." +
-                            "\n And you can not have a Sandwich without Bread");
+                default -> System.err.println("Please choose the correct option." +
+                        "\n And you can not have a Sandwich without Bread");
 
             }
         }
@@ -259,9 +352,7 @@ public class ShopUI {
                 {
                     return 12;
                 }
-                default ->
-                    System.out.println("Please Choose the correct option.");
-
+                default -> System.err.println("Please Choose the correct option.");
             }
         }
     }
