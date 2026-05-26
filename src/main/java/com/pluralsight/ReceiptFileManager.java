@@ -10,7 +10,7 @@ public class ReceiptFileManager {
     public static void saveReceipt(Order order) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
         String fileName = LocalDateTime.now().format(formatter);
-        String fileLocation = "capstone-2/src/main/resources/"+fileName+".txt";
+        String fileLocation = "src/main/resources/"+fileName+".txt";
         try {
             FileWriter fileWriter = new FileWriter(fileLocation);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
