@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import com.pluralsight.enums.*;
 
-import javax.swing.text.TableView;
 import java.util.Scanner;
 
 public class ShopUI {
@@ -136,7 +135,7 @@ public class ShopUI {
         }
     }
 
-    //TODO: Create the method
+
     private void addSandwich() {
         String menu = """
                 Please Choose one of the following options
@@ -149,8 +148,7 @@ public class ShopUI {
             String userInput = scanner.nextLine();
             switch (userInput){
                 case "1" ->{
-                    Sandwich sandwich = getUserSandwich();
-                    this.order.addProduct(sandwich);
+                    this.order.addProduct(getUserSandwich());
                     return;
                 }
                 case "2" -> {
@@ -161,9 +159,8 @@ public class ShopUI {
                     this.order.addProduct(signaturePhillyCheeseSteakSandwich());
                     return;
                 }
-                default -> {
-                    System.out.println("Please select correct option.");
-                }
+                default ->
+                        System.out.println("Please select correct option.");
 
             }
         }while(true);
@@ -233,14 +230,14 @@ public class ShopUI {
                 default -> System.err.println("No side added," +
                         "Please choose correct option ");
             }
-            System.out.println("Would you like to add more side (Yes/no)");
+            System.out.println("Would you like to add another side (Yes/no)");
             if ((scanner.nextLine()).equalsIgnoreCase("no"))
                 return;
         }
     }
 
     private void addSauces(Sandwich sandwich) {
-        System.out.println("Would you like to add Sauces (Yes/No)");
+        System.out.println("Would you like to add another Sauces (Yes/No)");
         if ((scanner.nextLine()).equalsIgnoreCase("no"))
             return;
         String menu = """
@@ -265,7 +262,7 @@ public class ShopUI {
                 default -> System.err.println("No sauce added, " +
                         "Please choose correct option.");
             }
-            System.out.println("Would You like to add more Sauce (Yes/No)");
+            System.out.println("Would You like to add another Sauce (Yes/No)");
             if ((scanner.nextLine()).equalsIgnoreCase("no"))
                 return;
         }
@@ -303,7 +300,7 @@ public class ShopUI {
                 default -> System.err.println("No topping added," +
                         "Please choose correct option");
             }
-            System.out.println("Would you like to add more toppings (yes/no)");
+            System.out.println("Would you like to add another toppings (yes/no)");
             if ((scanner.nextLine()).equalsIgnoreCase("no"))
                 return;
         }
@@ -335,7 +332,7 @@ public class ShopUI {
                 3) Cheddar
                 4) Swiss
                 """;
-        boolean running = true;
+
         do{
             System.out.println(menu);
             String userInput = scanner.nextLine();
