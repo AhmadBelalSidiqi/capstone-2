@@ -1,0 +1,5 @@
+1#
+ Chip
+Price_____________________________1.5
+
+Your Total price plus tax is: 1.605
