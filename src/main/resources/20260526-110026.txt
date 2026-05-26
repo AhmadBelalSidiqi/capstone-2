@@ -1,9 +1,0 @@
-1#
- Drink
-Size: LARGE
-Price_____________________________3.0
-2#
- Chip
-Price_____________________________1.5
-
-Your Total price plus tax is: 4.815

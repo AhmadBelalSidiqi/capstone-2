@@ -7,10 +7,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ReceiptFileManager {
+
+    public static final String SRC_MAIN_RESOURCES_RECEIPTS = "src/main/resources/receipts/";
+
     public static void saveReceipt(Order order) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
         String fileName = LocalDateTime.now().format(formatter);
-        String fileLocation = "src/main/resources/"+fileName+".txt";
+        String fileLocation = SRC_MAIN_RESOURCES_RECEIPTS +fileName+".txt";
         try {
             FileWriter fileWriter = new FileWriter(fileLocation);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
