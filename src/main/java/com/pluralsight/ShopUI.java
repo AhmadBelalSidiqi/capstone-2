@@ -140,10 +140,56 @@ public class ShopUI {
     private void addSandwich() {
         String menu = """
                 Please Choose one of the following options
-                1
+                1) Make your own sandwich
+                2) BLT Sandwich
+                3) Philly Cheese Steak
                 -----------------------""";
-        Sandwich sandwich = getUserSandwich();
-        this.order.addProduct(sandwich);
+        do {
+            System.out.println(menu);
+            String userInput = scanner.nextLine();
+            switch (userInput){
+                case "1" ->{
+                    Sandwich sandwich = getUserSandwich();
+                    this.order.addProduct(sandwich);
+                    return;
+                }
+                case "2" -> {
+                    this.order.addProduct(signatureBLTSandwich());
+                    return;
+                }
+                case "3" -> {
+                    this.order.addProduct(signaturePhillyCheeseSteakSandwich());
+                    return;
+                }
+                default -> {
+                    System.out.println("Please select correct option.");
+                }
+
+            }
+        }while(true);
+
+    }
+    // DONE: CREATE THE METHOD
+    private Product signaturePhillyCheeseSteakSandwich() {
+        Sandwich phillyCheeseSteak = new Sandwich(8,Bread.WHITE);
+        phillyCheeseSteak.addMeat(Meat.BACON);
+        phillyCheeseSteak.addCheese(Cheese.CHEDDAR);
+        phillyCheeseSteak.addToppings(Topping.LETTUCE);
+        phillyCheeseSteak.addToppings(Topping.TOMATOES);
+        phillyCheeseSteak.addSauce(Sauce.RANCH);
+        phillyCheeseSteak.toastTheSandwich();
+        return phillyCheeseSteak;
+    }
+
+    // Done: CREATE THE METHOD
+    private Product signatureBLTSandwich() {
+        Sandwich blt = new Sandwich(8,Bread.WHITE);
+        blt.addMeat(Meat.STEAK);
+        blt.addCheese(Cheese.AMERICAN);
+        blt.addToppings(Topping.PEPPERS);
+        blt.addSauce(Sauce.MAYO);
+        blt.toastTheSandwich();
+        return blt;
     }
 
     private Sandwich getUserSandwich() {
