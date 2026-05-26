@@ -9,14 +9,15 @@ public class Order {
         this.products = new ArrayList<>();
     }
 
-    public void showOrder(){
+    public String showOrder(){
+        StringBuilder order = new StringBuilder();
         int count = 1;
         for (Product product : products){
-            System.out.println(count +"#\n ");
-            System.out.println(product.getProductName());
+            order.append(count).append("#\n ").append(product.getProductName()).append("\n");
             count++;
         }
-        System.out.println("\nYour Total price plus tax is: " + getTotalPrice());
+        order.append("\nYour Total price plus tax is: ").append(getTotalPrice());
+        return order.toString();
     }
     public double getTotalPrice(){
         double totalPrice =0;

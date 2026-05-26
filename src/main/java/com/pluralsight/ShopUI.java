@@ -68,11 +68,14 @@ public class ShopUI {
     private void checkout() {
         if (this.order.isOrderEmpty())
             enforceAPurchase();
-        this.order.showOrder();
-        // TODO: Create the class and the method
+        displayOrder();
         ReceiptFileManager.saveReceipt(this.order);
         System.out.println("Your checkout is successful");
 
+    }
+
+    private void displayOrder() {
+        System.out.println(this.order.showOrder());
     }
 
     private void enforceAPurchase() {
