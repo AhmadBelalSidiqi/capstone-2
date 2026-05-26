@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import com.pluralsight.enums.*;
 
+import javax.swing.text.TableView;
 import java.util.Scanner;
 
 public class ShopUI {
@@ -9,11 +10,12 @@ public class ShopUI {
     static Scanner scanner = new Scanner(System.in);
     public void mainMenu() {
         String menu = """
+                ----------------------------------------
                 Hello Welcome To Deli-cious Sandwich Shop
                 Please choose one of the following:
                 1) New Order
                 0) Exit
-                """;
+                ---------------------------------------""";
         boolean running = true;
         do {
             System.out.println(menu);
@@ -37,7 +39,7 @@ public class ShopUI {
                 3) Add Chips
                 4) Checkout
                 0) Cancel Order
-                """;
+                --------------------------------------""";
         boolean running = true;
         do {
             System.out.println(menu);
@@ -64,14 +66,23 @@ public class ShopUI {
         this.order.clearOrder();
     }
 
-    // TODO: Create the method
+    // DONE: Create the method
     private void checkout() {
         if (this.order.isOrderEmpty())
             enforceAPurchase();
+        System.out.println("----------Order---------");
         displayOrder();
-        ReceiptFileManager.saveReceipt(this.order);
-        System.out.println("Your checkout is successful");
-
+        System.out.println("--------------------------");
+        System.out.println("Please confirm this order (Yes/No)");
+        if((scanner.nextLine()).equalsIgnoreCase("yes")){
+            ReceiptFileManager.saveReceipt(this.order);
+            System.out.println("Your checkout is successful");
+            order.clearOrder();
+            return;
+        }
+        //  TODO: GIVE OPTION TO ADD MORE ITEMS.
+        order.clearOrder();
+        System.out.println("Order Canceled.");
     }
 
     private void displayOrder() {
@@ -85,17 +96,17 @@ public class ShopUI {
                 you have to buy one of the followings items
                 1) Add Drink
                 2) Add Chip
-                """;
-        while (this.order.isOrderEmpty()){
+                ----------------------------------""";
+        do{
             System.out.println(menu);
             String userInput = scanner.nextLine();
+
             switch (userInput){
                 case "1" -> addDrink();
                 case "2" -> addChip();
                 default -> System.out.println("Please choose correct option (1-2)");
             }
-
-        }
+        }while (this.order.isOrderEmpty());
     }
 
     // Done: Create the method
@@ -110,7 +121,7 @@ public class ShopUI {
                 1) Large
                 2) Medium
                 3) Small
-                """;
+                ------------------------------------""";
         System.out.println(menu);
         String userInput = scanner.nextLine();
         switch (userInput){
@@ -125,8 +136,12 @@ public class ShopUI {
         }
     }
 
-    //Done: Create the method
+    //TODO: Create the method
     private void addSandwich() {
+        String menu = """
+                Please Choose one of the following options
+                1
+                -----------------------""";
         Sandwich sandwich = getUserSandwich();
         this.order.addProduct(sandwich);
     }
@@ -135,8 +150,12 @@ public class ShopUI {
         int userSandwichSize = getUserSandwichSize();
         Bread userSandwichBread = getUserSandwichBread();
         Sandwich sandwich = new Sandwich(userSandwichSize, userSandwichBread);
-        addMeat(sandwich);
-        addCheese(sandwich);
+        System.out.println("Would you like to add Meat (Yes/No)");
+        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+            addMeat(sandwich);
+        System.out.println("Would you like to add Cheese (Yes/No)");
+        if ((scanner.nextLine()).equalsIgnoreCase("Yes"))
+            addCheese(sandwich);
         addToppings(sandwich);
         addSauces(sandwich);
         addSides(sandwich);
@@ -158,7 +177,7 @@ public class ShopUI {
                 Please choose one of the followings:
                 1) Au Jus
                 2) Sauce
-                """;
+                ----------------------------------""";
         while (true){
             System.out.println(menu);
             String userInput = scanner.nextLine();
@@ -246,23 +265,20 @@ public class ShopUI {
 
 
     private void addCheese(Sandwich sandwich) {
-        System.out.println("Would you like to add Cheese (Yest/No)");
-        if ((scanner.nextLine()).equalsIgnoreCase("Yes")){
             sandwich.addCheese(getUserSandwichCheese());
             System.out.println("Would you like Extra Cheese (Yes/No)");
             if ((scanner.nextLine()).equalsIgnoreCase("yes"))
                 sandwich.addExtraCheese();
-        }
+
     }
 
     private void addMeat(Sandwich sandwich) {
-        System.out.println("Would you like to add Meat (Yes/No)");
-        if ((scanner.nextLine()).equalsIgnoreCase("yes")){
+
             sandwich.addMeat(getUserSandwichMeat());
             System.out.println("Would You like extra Meat (Yes/No)");
             if ((scanner.nextLine()).equalsIgnoreCase("yes"))
                 sandwich.addExtraMeat();
-        }
+
     }
 
     private Cheese getUserSandwichCheese() {
@@ -273,7 +289,8 @@ public class ShopUI {
                 3) Cheddar
                 4) Swiss
                 """;
-        while (true){
+        boolean running = true;
+        do{
             System.out.println(menu);
             String userInput = scanner.nextLine();
             switch (userInput) {
@@ -293,7 +310,7 @@ public class ShopUI {
                         System.err.println("Please choose correct option");
             }
 
-        }
+        }while (true);
     }
 
     private Meat getUserSandwichMeat() {
@@ -306,7 +323,7 @@ public class ShopUI {
                 5) Chicken
                 6) Bacon
                 """;
-        while (true){
+        do{
             System.out.println(menu);
             String userInput = scanner.nextLine();
             switch (userInput){
@@ -330,7 +347,7 @@ public class ShopUI {
                 }
                 default -> System.err.println("Please choose the correct Option.");
             }
-        }
+        } while (true);
     }
 
 
@@ -342,7 +359,7 @@ public class ShopUI {
                 3) Rye
                 4) Wrap
                 """;
-        while (true){
+        do {
             System.out.println(menu);
             String userInput = scanner.nextLine();
             switch (userInput){
@@ -362,18 +379,17 @@ public class ShopUI {
                         "\n And you can not have a Sandwich without Bread");
 
             }
-        }
+        } while (true);
     }
 
     private int getUserSandwichSize() {
-        int size;
         String menu = """
                 Please choose one of the following size:
                 1) 4"
                 2) 8"
                 3) 12"
                 """;
-        while (true){
+        do {
             System.out.println(menu);
             String input = scanner.nextLine();
             switch (input){
@@ -390,7 +406,7 @@ public class ShopUI {
                 }
                 default -> System.err.println("Please Choose the correct option.");
             }
-        }
+        } while (true);
     }
 
 }

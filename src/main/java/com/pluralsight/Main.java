@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         ShopUI dei = new ShopUI();
         dei.mainMenu();
-        System.out.println("11");
+
 
 
     }
