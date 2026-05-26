@@ -77,7 +77,7 @@ public class Sandwich implements Product{
                 return totalPrice;
             }
             default ->
-                    throw new RuntimeException();
+                throw new RuntimeException("Sandwich size can only be (4,8,12)\"");
         }
     }
     // Done: Create the method

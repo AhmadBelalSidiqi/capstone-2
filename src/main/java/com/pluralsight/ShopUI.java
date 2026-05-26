@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ShopUI {
     Order order;
     static Scanner scanner = new Scanner(System.in);
-    private void mainMenu() {
+    public void mainMenu() {
         String menu = """
                 Hello Welcome To Deli-cious Sandwich Shop
                 Please choose one of the following:
@@ -66,6 +66,33 @@ public class ShopUI {
 
     // TODO: Create the method
     private void checkout() {
+        if (this.order.isOrderEmpty())
+            enforceAPurchase();
+        this.order.showOrder();
+        // TODO: Create the class and the method
+        ReceiptFileManager.saveReceipt(this.order);
+        System.out.println("Your checkout is successful");
+
+    }
+
+    private void enforceAPurchase() {
+        String menu = """
+                You order is empty,
+                To complete your checkout,
+                you have to buy one of the followings items
+                1) Add Drink
+                2) Add Chip
+                """;
+        while (this.order.isOrderEmpty()){
+            System.out.println(menu);
+            String userInput = scanner.nextLine();
+            switch (userInput){
+                case "1" -> addDrink();
+                case "2" -> addChip();
+                default -> System.out.println("Please choose correct option (1-2)");
+            }
+
+        }
     }
 
     // Done: Create the method
@@ -110,8 +137,14 @@ public class ShopUI {
         addToppings(sandwich);
         addSauces(sandwich);
         addSides(sandwich);
-
+        toastTheSandwich(sandwich);
         return sandwich;
+    }
+
+    private static void toastTheSandwich(Sandwich sandwich) {
+        System.out.println("Would you like to toast your sandwich(Yes/No)");
+        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+            sandwich.toastTheSandwich();
     }
 
     private void addSides(Sandwich sandwich) {
@@ -132,7 +165,7 @@ public class ShopUI {
                 default -> System.err.println("No side added," +
                         "Please choose correct option ");
             }
-            System.out.println("Would you like to add more side");
+            System.out.println("Would you like to add more side (Yes/no)");
             if ((scanner.nextLine()).equalsIgnoreCase("no"))
                 return;
         }

@@ -4,18 +4,17 @@ import java.util.ArrayList;
 
 public class Order {
    private ArrayList<Product> products;
-   public static int receiptsCount;
 
     public Order() {
         this.products = new ArrayList<>();
-        receiptsCount ++;
     }
 
-    public void showReceipt(){
+    public void showOrder(){
         int count = 1;
         for (Product product : products){
             System.out.println(count +"#\n ");
-            product.getProductName();
+            System.out.println(product.getProductName());
+            count++;
         }
         System.out.println("\nYour Total price plus tax is: " + getTotalPrice());
     }
@@ -34,7 +33,6 @@ public class Order {
     }
     public void clearOrder(){
         this.products.clear();
-        receiptsCount --;
     }
 
 }
