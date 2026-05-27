@@ -4,8 +4,8 @@ import com.pluralsight.enums.*;
 
 public class Main {
     public static void main(String[] args) {
-        ShopUI dei = new ShopUI();
-        dei.mainMenu();
+        ShopUI shopUI = new ShopUI();
+        shopUI.mainMenu();
 
 
 
