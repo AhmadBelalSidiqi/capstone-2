@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -15,11 +16,15 @@ public class ReceiptFileManager {
         String fileName = LocalDateTime.now().format(formatter);
         String fileLocation = SRC_MAIN_RESOURCES_RECEIPTS +fileName+".txt";
         try {
+            File directory = new File(SRC_MAIN_RESOURCES_RECEIPTS);
+            if (!directory.exists())
+                directory.mkdir();
             FileWriter fileWriter = new FileWriter(fileLocation);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(order.showOrder());
             bufferedWriter.flush();
             bufferedWriter.close();
+            System.out.println("Recept saved at: "+fileLocation);
 
         } catch (IOException e){
             System.err.println("File Location not found");

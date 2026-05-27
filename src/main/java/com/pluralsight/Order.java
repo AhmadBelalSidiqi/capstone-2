@@ -3,7 +3,6 @@ package com.pluralsight;
 import java.util.ArrayList;
 
 public class Order {
-    public static final double SALES_TAX_RATE = 1.07;
     private final ArrayList<Product> products;
 
     public Order() {
@@ -17,7 +16,7 @@ public class Order {
             order.append(count).append("#\n ").append(product.getProductName()).append("\n");
             count++;
         }
-        order.append("\nYour Total price plus tax is: ").append(getTotalPrice());
+        order.append("\nYour Total : ").append(getTotalPrice());
         return order.toString();
     }
     public double getTotalPrice(){
@@ -25,7 +24,7 @@ public class Order {
         for(Product product: products)
             totalPrice += product.getPrice();
         // Sales Tax is 7%
-        return totalPrice * SALES_TAX_RATE;
+        return totalPrice;
     }
     public void addProduct(Product product){
         this.products.add(product);

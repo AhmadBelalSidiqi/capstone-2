@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class ShopUI {
     private Order order;
     static Scanner scanner = new Scanner(System.in);
+
     public void mainMenu() {
         String menu = """
                 ----------------------------------------
@@ -19,19 +20,25 @@ public class ShopUI {
         do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            if (selectedOption.equalsIgnoreCase("1"))
-                orderScreen();
-            else
-                running = false;
-
+            switch (selectedOption) {
+                case "1":
+                    orderScreen();
+                    break;
+                case "0":
+                    running = false;
+                    System.out.println("Thank you have a nice day");
+                    break;
+                default:
+                    System.err.println("Please enter valid input (0-1)");
+            }
         } while (running);
 
-        System.out.println("Thank you Have a good day!");
     }
 
     private void orderScreen() {
-         this.order = new Order();
+        this.order = new Order();
         String menu = """
+                --------------------------------------
                 Please choose one of the following:
                 1) Add Sandwich
                 2) Add Drink
@@ -44,63 +51,70 @@ public class ShopUI {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
             switch (selectedOption) {
-                case "1" :
+                case "1":
                     addSandwich();
                     break;
-                case "2" :
+                case "2":
                     addDrink();
                     break;
-                case "3" :
+                case "3":
                     addChip();
                     break;
-                case "4" :
+                case "4":
                     checkout();
                     running = false;
                     break;
-                case "0" :
+                case "0":
                     cancelOrder();
                     running = false;
                     break;
+                default:
+                    System.err.println("Please enter valid input(0-4)");
             }
 
-        }while (running);
+        } while (running);
 
     }
 
     private void addSandwich() {
         String menu = """
+                ------------------------------------------
                 Please Choose one of the following options
                 1) Make your own sandwich
                 2) BLT Sandwich
                 3) Philly Cheese Steak
-                -----------------------""";
+                ------------------------------------------""";
         do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            switch (selectedOption){
-                case "1" :
-                    this.order.addProduct(getUserSandwich());
+            switch (selectedOption) {
+                case "1":
+                    this.order.addProduct(getUserCustomSandwich());
+                    System.out.println("Your custom sandwich added to order");
                     return;
-                case "2" :
+                case "2":
                     this.order.addProduct(signatureBLTSandwich());
+                    System.out.println("BLT sandwich added to order");
                     return;
-                case "3" :
+                case "3":
                     this.order.addProduct(signaturePhillyCheeseSteakSandwich());
+                    System.out.println("Philly Cheese Steak added to order");
                     return;
-                default :
-                    System.out.println("Please select correct option.");
-
+                default:
+                    System.err.println("Please enter valid input(1-3)");
             }
-        }while(true);
+        } while (true);
 
     }
 
     private void addChip() {
         order.addProduct(new Chip());
+        System.out.println("Chip added");
     }
 
     private void addDrink() {
         String menu = """
+                -------------------------------------
                 Please choose one of following size:
                 1) Large
                 2) Medium
@@ -108,18 +122,22 @@ public class ShopUI {
                 ------------------------------------""";
         System.out.println(menu);
         String selectedOption = scanner.nextLine();
-        switch (selectedOption){
-            case "1" :
+        switch (selectedOption) {
+            case "1":
                 this.order.addProduct(new Drink(Size.LARGE));
+                System.out.println("Drink: "+Size.LARGE+" added");
                 break;
-            case "2" :
+            case "2":
                 this.order.addProduct(new Drink(Size.MEDIUM));
+                System.out.println("Drink: "+Size.MEDIUM+" added");
+
                 break;
-            case "3" :
+            case "3":
                 this.order.addProduct(new Drink((Size.SMALL)));
+                System.out.println("Drink: "+Size.SMALL+" added");
                 break;
-            default :
-                System.out.println("No Drinks added");
+            default:
+                System.err.println("No Drinks Added");
         }
     }
 
@@ -129,8 +147,7 @@ public class ShopUI {
         System.out.println("---------- Order Summary ---------");
         displayOrder();
         System.out.println("--------------------------");
-        System.out.println("Please confirm if the order is correct (yes/no)");
-        if((scanner.nextLine()).equalsIgnoreCase("yes")){
+        if (askYesNo("Please confirm if the order is correct")) {
             ReceiptFileManager.saveReceipt(this.order);
             System.out.println("Order placed successfully");
             order.clearOrder();
@@ -142,6 +159,7 @@ public class ShopUI {
 
     private void cancelOrder() {
         this.order.clearOrder();
+        System.out.println("Order canceled");
     }
 
     private void displayOrder() {
@@ -156,25 +174,25 @@ public class ShopUI {
                 1) Add Drink
                 2) Add Chip
                 ----------------------------------""";
-        do{
+        do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
 
-            switch (selectedOption){
-                case "1" :
+            switch (selectedOption) {
+                case "1":
                     addDrink();
                     break;
-                case "2" :
+                case "2":
                     addChip();
                     break;
-                default :
-                    System.out.println("Please choose a correct option (1-2)");
+                default:
+                    System.err.println("Please enter valid input (1-2)");
             }
-        }while (this.order.isOrderEmpty());
+        } while (this.order.isOrderEmpty());
     }
 
     private Product signaturePhillyCheeseSteakSandwich() {
-        Sandwich phillyCheeseSteak = new Sandwich(8,Bread.WHITE);
+        Sandwich phillyCheeseSteak = new Sandwich(8, Bread.WHITE);
         phillyCheeseSteak.addMeat(Meat.STEAK);
         phillyCheeseSteak.addCheese(Cheese.CHEDDAR);
         phillyCheeseSteak.addToppings(Topping.LETTUCE);
@@ -185,7 +203,7 @@ public class ShopUI {
     }
 
     private Product signatureBLTSandwich() {
-        Sandwich blt = new Sandwich(8,Bread.WHITE);
+        Sandwich blt = new Sandwich(8, Bread.WHITE);
         blt.addMeat(Meat.BACON);
         blt.addCheese(Cheese.AMERICAN);
         blt.addToppings(Topping.PEPPERS);
@@ -194,7 +212,7 @@ public class ShopUI {
         return blt;
     }
 
-    private Sandwich getUserSandwich() {
+    private Sandwich getUserCustomSandwich() {
         int userSandwichSize = buildCustomSandwich();
         Bread userSandwichBread = getUserSandwichBread();
         Sandwich sandwich = new Sandwich(userSandwichSize, userSandwichBread);
@@ -207,7 +225,7 @@ public class ShopUI {
         System.out.println("Would you like to add toppings (yes/no)");
         if ((scanner.nextLine().equalsIgnoreCase("Yes")))
             addToppings(sandwich);
-        System.out.println("Would you like to add another sauces (yes/no)");
+        System.out.println("Would you like to add sauces (yes/no)");
         if ((scanner.nextLine()).equalsIgnoreCase("yes"))
             addSauces(sandwich);
         System.out.println("Would you like to add sides (yes/no)");
@@ -220,7 +238,8 @@ public class ShopUI {
     }
 
     private static void toastTheSandwich(Sandwich sandwich) {
-            sandwich.toastTheSandwich();
+        sandwich.toastTheSandwich();
+        System.out.println("Sandwich toasted");
     }
 
     private void addSidesToSandwich(Sandwich sandwich) {
@@ -236,17 +255,19 @@ public class ShopUI {
             switch (selectedOption) {
                 case "1":
                     sandwich.addSide(Side.AU_JUS);
+                    System.out.println("Side: "+ Side.AU_JUS+" added");
                     break;
                 case "2":
                     sandwich.addSide(Side.SAUCE);
+                    System.out.println("Side: "+ Side.SAUCE+" added");
                     break;
                 default:
                     System.err.println("No side added," +
-                            "Please choos a correct option ");
+                            "Please enter a valid option ");
             }
-            System.out.println("Would you like to add another side (yes/no)");
-            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+            if (!askYesNo("Would you like to add another side")) {
                 return;
+            }
         } while (true);
     }
 
@@ -264,32 +285,37 @@ public class ShopUI {
         do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            switch (selectedOption){
-                case "1" :
-                        sandwich.addSauce(Sauce.MAYO);
-                        break;
-                case "2" :
-                        sandwich.addSauce(Sauce.MUSTARD);
-                        break;
-                case "3" :
-                        sandwich.addSauce(Sauce.KETCHUP);
-                        break;
-                case "4" :
-                        sandwich.addSauce(Sauce.RANCH);
-                        break;
-                case "5" :
-                        sandwich.addSauce(Sauce.THOUSAND_ISLANDS);
-                        break;
-                case "6" :
-                        sandwich.addSauce(Sauce.VINAIGRETTE);
-                        break;
-                default :
-                        System.err.println("No sauce added, " +
-                        "Please choose a correct option.");
+            switch (selectedOption) {
+                case "1":
+                    sandwich.addSauce(Sauce.MAYO);
+                    System.out.println("Sauce: "+Sauce.MAYO+" added");
+                    break;
+                case "2":
+                    sandwich.addSauce(Sauce.MUSTARD);
+                    System.out.println("Sauce: "+Sauce.MUSTARD+" added");
+                    break;
+                case "3":
+                    sandwich.addSauce(Sauce.KETCHUP);
+                    System.out.println("Sauce: "+Sauce.KETCHUP+" added");
+                    break;
+                case "4":
+                    sandwich.addSauce(Sauce.RANCH);
+                    System.out.println("Sauce: "+Sauce.RANCH+" added");
+                    break;
+                case "5":
+                    sandwich.addSauce(Sauce.THOUSAND_ISLANDS);
+                    System.out.println("Sauce: "+Sauce.THOUSAND_ISLANDS+" added");
+                    break;
+                case "6":
+                    sandwich.addSauce(Sauce.VINAIGRETTE);
+                    System.out.println("Sauce: "+Sauce.VINAIGRETTE+" added");
+                    break;
+                default:
+                    System.err.println("No sauce added, " +
+                            "Please enter a valid option.");
             }
 
-            System.out.println("Would You like to add another Sauce (yes/no)");
-            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+            if (!askYesNo("Would You like to add another Sauce"))
                 return;
         } while (true);
     }
@@ -312,58 +338,69 @@ public class ShopUI {
         do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            switch (selectedOption){
-                case "1" :
-                        sandwich.addToppings(Topping.LETTUCE);
-                        break;
-                case "2" :
-                        sandwich.addToppings(Topping.PEPPERS);
-                        break;
-                case "3" :
-                        sandwich.addToppings(Topping.ONIONS);
-                        break;
-                case "4" :
-                        sandwich.addToppings(Topping.TOMATOES);
-                        break;
-                case "5" :
-                        sandwich.addToppings(Topping.JALAPENOS);
-                        break;
-                case "6" :
-                        sandwich.addToppings(Topping.CUCUMBERS);
-                        break;
-                case "7" :
-                        sandwich.addToppings(Topping.PICKLES);
-                        break;
-                case "8" :
-                        sandwich.addToppings(Topping.GUACAMOLE);
-                        break;
-                case "9" :
-                        sandwich.addToppings(Topping.MUSHROOMS);
-                        break;
-                default :
-                        System.err.println("No topping added," +
-                        "Please choose a correct option");
+            switch (selectedOption) {
+                case "1":
+                    sandwich.addToppings(Topping.LETTUCE);
+                    System.out.println("Topping: "+Topping.LETTUCE+" Added");
+                    break;
+                case "2":
+                    sandwich.addToppings(Topping.PEPPERS);
+                    System.out.println("Topping: "+Topping.PEPPERS+" Added");
+                    break;
+                case "3":
+                    sandwich.addToppings(Topping.ONIONS);
+                    System.out.println("Topping: "+Topping.ONIONS+" Added");
+                    break;
+                case "4":
+                    sandwich.addToppings(Topping.TOMATOES);
+                    System.out.println("Topping: "+Topping.TOMATOES+" Added");
+                    break;
+                case "5":
+                    sandwich.addToppings(Topping.JALAPENOS);
+                    System.out.println("Topping: "+Topping.JALAPENOS+" Added");
+                    break;
+                case "6":
+                    sandwich.addToppings(Topping.CUCUMBERS);
+                    System.out.println("Topping: "+Topping.CUCUMBERS+" Added");
+                    break;
+                case "7":
+                    sandwich.addToppings(Topping.PICKLES);
+                    System.out.println("Topping: "+Topping.PICKLES+" Added");
+                    break;
+                case "8":
+                    sandwich.addToppings(Topping.GUACAMOLE);
+                    System.out.println("Topping: "+Topping.GUACAMOLE+" Added");
+                    break;
+                case "9":
+                    sandwich.addToppings(Topping.MUSHROOMS);
+                    System.out.println("Topping: "+Topping.MUSHROOMS+" Added");
+                    break;
+                default:
+                    System.err.println("No topping added," +
+                            "Please enter a valid option");
             }
-            System.out.println("Would you like to add another toppings (yes/no)");
-            if ((scanner.nextLine()).equalsIgnoreCase("no"))
+            if (!askYesNo("Would you like to add another toppings"))
                 return;
         } while (true);
     }
 
     private void addCheese(Sandwich sandwich) {
-            sandwich.addCheese(getUserSandwichCheese());
-            System.out.println("Would you like Extra Cheese (yes/no)");
-            if ((scanner.nextLine()).equalsIgnoreCase("yes"))
-                sandwich.addExtraCheese();
+        sandwich.addCheese(getUserSandwichCheese());
+        System.out.println("Cheese added");
+        if (askYesNo("Would you like Extra Cheese")) {
+            System.out.println("Extra Cheese Added");
+            sandwich.addExtraCheese();
+        }
 
     }
 
     private void addMeat(Sandwich sandwich) {
-
-            sandwich.addMeat(getUserSandwichMeat());
-            System.out.println("Would You like extra meat (yes/no)");
-            if ((scanner.nextLine()).equalsIgnoreCase("yes"))
-                sandwich.addExtraMeat();
+        sandwich.addMeat(getUserSandwichMeat());
+        System.out.println("Meat Added");
+        if (askYesNo("Would You like extra meat")) {
+            System.out.println("Extra Meat Added");
+            sandwich.addExtraMeat();
+        }
 
     }
 
@@ -376,23 +413,23 @@ public class ShopUI {
                 4) Swiss
                 """;
 
-        do{
+        do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
             switch (selectedOption) {
-                case "1" :
+                case "1":
                     return Cheese.AMERICAN;
-                case "2" :
+                case "2":
                     return Cheese.PROVOLONE;
-                case "3" :
+                case "3":
                     return Cheese.CHEDDAR;
-                case "4" :
+                case "4":
                     return Cheese.SWISS;
-                default :
-                        System.err.println("Please choose a correct option");
+                default:
+                    System.err.println("Please enter a valid option");
             }
 
-        }while (true);
+        } while (true);
     }
 
     private Meat getUserSandwichMeat() {
@@ -405,24 +442,24 @@ public class ShopUI {
                 5) Chicken
                 6) Bacon
                 """;
-        do{
+        do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            switch (selectedOption){
-                case "1" :
+            switch (selectedOption) {
+                case "1":
                     return Meat.STEAK;
-                case "2" :
+                case "2":
                     return Meat.HAM;
-                case "3" :
+                case "3":
                     return Meat.SALAMI;
-                case "4" :
+                case "4":
                     return Meat.ROAST_BEEF;
-                case "5" :
+                case "5":
                     return Meat.CHICKEN;
-                case "6" :
+                case "6":
                     return Meat.BACON;
-                default :
-                        System.err.println("Please choose the correct Option.");
+                default:
+                    System.err.println("Please enter a valid Option.");
             }
         } while (true);
     }
@@ -438,18 +475,18 @@ public class ShopUI {
         do {
             System.out.println(menu);
             String selectedOption = scanner.nextLine();
-            switch (selectedOption){
-                case "1" :
+            switch (selectedOption) {
+                case "1":
                     return Bread.WHITE;
-                case "2" :
+                case "2":
                     return Bread.WHEAT;
-                case "3" :
+                case "3":
                     return Bread.RYE;
-                case "4" :
+                case "4":
                     return Bread.WRAP;
-                default :
-                    System.err.println("Please choose the correct option." +
-                        "\n And you can not have a Sandwich without Bread");
+                default:
+                    System.err.println("Please enter a valid option(1-4)." +
+                            "\n And you can not have a Sandwich without Bread");
 
             }
         } while (true);
@@ -465,17 +502,23 @@ public class ShopUI {
         do {
             System.out.println(menu);
             String input = scanner.nextLine();
-            switch (input){
+            switch (input) {
                 case "1":
                     return 4;
                 case "2":
                     return 8;
-                case "3" :
+                case "3":
                     return 12;
-                default :
-                    System.err.println("Please Choose the correct option.");
+                default:
+                    System.err.println("Please enter a valid option (1-3).");
             }
         } while (true);
+    }
+
+    private boolean askYesNo(String message) {
+        System.out.println(message + " (yes/no)");
+        String input = scanner.nextLine();
+        return input.equalsIgnoreCase("yes");
     }
 
 }
