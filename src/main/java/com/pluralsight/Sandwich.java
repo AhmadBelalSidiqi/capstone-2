@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import com.pluralsight.Sandwich_Ingrediant_Price.SandwichPriceManger;
 import com.pluralsight.enums.*;
 
 import java.util.HashSet;
@@ -39,46 +40,17 @@ public class Sandwich implements Product{
     @Override
     public double getPrice() {
         double totalPrice = 0;
-        switch (this.size){
-            case 4->{
-                totalPrice += 5.50;
-                if (!(this.meat == null))
-                    totalPrice+=1;
-                if (!(this.cheese == null))
-                    totalPrice += 0.75;
-                if (extraMeat)
-                    totalPrice += 0.50;
-                if (extraChees)
-                    totalPrice += 0.30;
-                return totalPrice;
-            }
-            case 8->{
-                totalPrice += 7;
-                if (!(this.meat == null))
-                    totalPrice+=2;
-                if (!(this.cheese == null))
-                    totalPrice += 1.50;
-                if (extraMeat)
-                    totalPrice += 1;
-                if (extraChees)
-                    totalPrice += 0.60;
-                return totalPrice;
-            }
-            case 12->{
-                totalPrice += 8.5;
-                if (!(this.meat == null))
-                    totalPrice+=3;
-                if (!(this.cheese == null))
-                    totalPrice += 2.25;
-                if (extraMeat)
-                    totalPrice += 1.50;
-                if (extraChees)
-                    totalPrice += 0.90;
-                return totalPrice;
-            }
-            default ->
-                throw new RuntimeException("Sandwich size can only be (4,8,12)\"");
-        }
+        totalPrice += SandwichPriceManger.getBreadPrice(this.size);
+        if(this.meat != null)
+            totalPrice += SandwichPriceManger.getMeatPrice(this.size);
+        if (this.extraMeat)
+            totalPrice += SandwichPriceManger.getExtraMeatPrice(this.size);
+        if (this.cheese != null)
+            totalPrice += SandwichPriceManger.getCheesePrice(this.size);
+        if (extraChees)
+            totalPrice += SandwichPriceManger.getExtraCheesePrice(this.size);
+        return totalPrice;
+
     }
     // Done: Create the method
     @Override
