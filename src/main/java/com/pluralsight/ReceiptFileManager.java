@@ -12,11 +12,14 @@ public class ReceiptFileManager {
     public static final String SRC_MAIN_RESOURCES_RECEIPTS = "src/main/resources/receipts/";
 
     public static void saveReceipt(Order order) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
         String fileName = LocalDateTime.now().format(formatter);
         String fileLocation = SRC_MAIN_RESOURCES_RECEIPTS +fileName+".txt";
         try {
             File directory = new File(SRC_MAIN_RESOURCES_RECEIPTS);
+            File resourcesDirectory = new File("src/main/resources/");
+            if (!resourcesDirectory.exists())
+                resourcesDirectory.mkdir();
             if (!directory.exists())
                 directory.mkdir();
             FileWriter fileWriter = new FileWriter(fileLocation);
