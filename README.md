@@ -36,10 +36,12 @@ The application demonstrates Object-Oriented Programming (OOP) concepts such as 
 5. Follow the on-screen menu prompts
 
 ---
-
+## Project Diagram
+![SandwichShopDiagram.jpg](src/main/diagram/SandwichShopDiagram.jpg)
+---
 ## Project Structure
+![final_project_structure.jpg](src/main/diagram/final_project_structure.jpg)
 
-    //TODO : ADD PROJECT Structure
 ---
 
 ## Receipt File Format

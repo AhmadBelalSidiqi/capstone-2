@@ -1,6 +1,8 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
-public class Chip implements Product{
+import com.pluralsight.Product;
+
+public class Chip implements Product {
     @Override
     public double getPrice() {
         return 1.50;

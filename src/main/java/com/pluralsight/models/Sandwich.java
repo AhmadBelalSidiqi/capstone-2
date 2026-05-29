@@ -1,18 +1,19 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
-import com.pluralsight.Sandwich_Ingrediant_Price.SandwichPriceManger;
+import com.pluralsight.Product;
+import com.pluralsight.pricing.SandwichPriceManager;
 import com.pluralsight.enums.*;
 
 import java.util.HashSet;
 
-public class Sandwich implements Product{
+public class Sandwich implements Product {
     private final int size;
     private final Bread bread;
     private Meat meat;
     private Cheese cheese;
-    private HashSet<Topping> toppings;
-    private HashSet<Sauce> sauces;
-    private HashSet<Side> sides;
+    private final HashSet<Topping> toppings;
+    private final HashSet<Sauce> sauces;
+    private final HashSet<Side> sides;
     private boolean extraMeat;
     private boolean extraChees;
     private boolean toasted;
@@ -40,15 +41,15 @@ public class Sandwich implements Product{
     @Override
     public double getPrice() {
         double totalPrice = 0;
-        totalPrice += SandwichPriceManger.getBreadPrice(this.size);
+        totalPrice += SandwichPriceManager.getBreadPrice(this.size);
         if(this.meat != null)
-            totalPrice += SandwichPriceManger.getMeatPrice(this.size);
+            totalPrice += SandwichPriceManager.getMeatPrice(this.size);
         if (this.extraMeat)
-            totalPrice += SandwichPriceManger.getExtraMeatPrice(this.size);
+            totalPrice += SandwichPriceManager.getExtraMeatPrice(this.size);
         if (this.cheese != null)
-            totalPrice += SandwichPriceManger.getCheesePrice(this.size);
+            totalPrice += SandwichPriceManager.getCheesePrice(this.size);
         if (extraChees)
-            totalPrice += SandwichPriceManger.getExtraCheesePrice(this.size);
+            totalPrice += SandwichPriceManager.getExtraCheesePrice(this.size);
         return totalPrice;
 
     }

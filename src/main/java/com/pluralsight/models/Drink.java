@@ -1,8 +1,9 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
+import com.pluralsight.Product;
 import com.pluralsight.enums.Size;
 
-public class Drink implements Product{
+public class Drink implements Product {
     private final Size size;
 
     public Drink(Size size) {

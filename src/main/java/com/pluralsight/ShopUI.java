@@ -1,6 +1,10 @@
 package com.pluralsight;
 
 import com.pluralsight.enums.*;
+import com.pluralsight.models.Chip;
+import com.pluralsight.models.Drink;
+import com.pluralsight.models.Order;
+import com.pluralsight.models.Sandwich;
 
 import java.util.Scanner;
 
@@ -216,23 +220,17 @@ public class ShopUI {
         int userSandwichSize = buildCustomSandwich();
         Bread userSandwichBread = getUserSandwichBread();
         Sandwich sandwich = new Sandwich(userSandwichSize, userSandwichBread);
-        System.out.println("Would you like to add Meat (yes/no)");
-        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+        if (askYesNo("Would you like to add Meat"))
             addMeat(sandwich);
-        System.out.println("Would you like to add Cheese (yes/no)");
-        if ((scanner.nextLine()).equalsIgnoreCase("Yes"))
+        if (askYesNo("Would you like to add Cheese"))
             addCheese(sandwich);
-        System.out.println("Would you like to add toppings (yes/no)");
-        if ((scanner.nextLine().equalsIgnoreCase("Yes")))
+        if (askYesNo("Would you like to add toppings"))
             addToppings(sandwich);
-        System.out.println("Would you like to add sauces (yes/no)");
-        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+        if (askYesNo("Would you like to add sauces"))
             addSauces(sandwich);
-        System.out.println("Would you like to add sides (yes/no)");
-        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+        if (askYesNo("Would you like to add sides"))
             addSidesToSandwich(sandwich);
-        System.out.println("Would you like to toast your sandwich(yes/no)");
-        if ((scanner.nextLine()).equalsIgnoreCase("yes"))
+        if (askYesNo("Would you like to toast your sandwich"))
             toastTheSandwich(sandwich);
         return sandwich;
     }
@@ -387,7 +385,13 @@ public class ShopUI {
     private void addCheese(Sandwich sandwich) {
         sandwich.addCheese(getUserSandwichCheese());
         System.out.println("Cheese added");
-        if (askYesNo("Would you like Extra Cheese")) {
+        String prompt = """
+                Would You like extra cheese ?
+                Cost - 0.30 - for 4" Sandwich
+                Cost - 0.60 - for 8" Sandwich
+                Cost - 0.90 - for 12" Sandwich
+                """;
+        if (askYesNo(prompt)) {
             System.out.println("Extra Cheese Added");
             sandwich.addExtraCheese();
         }
@@ -397,7 +401,13 @@ public class ShopUI {
     private void addMeat(Sandwich sandwich) {
         sandwich.addMeat(getUserSandwichMeat());
         System.out.println("Meat Added");
-        if (askYesNo("Would You like extra meat")) {
+        String prompt = """
+                Would You like extra meat ?
+                Cost - 0.50 - for 4" Sandwich
+                Cost - 1.00 - for 8" Sandwich
+                Cost - 1.50 - for 12" Sandwich
+                """;
+        if (askYesNo(prompt)) {
             System.out.println("Extra Meat Added");
             sandwich.addExtraMeat();
         }

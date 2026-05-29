@@ -1,10 +1,10 @@
-package com.pluralsight.Sandwich_Ingrediant_Price;
+package com.pluralsight.pricing;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SandwichPriceManger {
+public class SandwichPriceManager {
 
     public static final String SRC_MAIN_RESOURCES_INGREDIENTS_PRICE_CSV = "src/main/resources/IngredientsPrice.csv";
 
