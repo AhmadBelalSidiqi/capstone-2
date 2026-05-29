@@ -22,8 +22,9 @@ The application demonstrates Object-Oriented Programming (OOP) concepts such as 
 - Add drinks (small, medium, large)
 - Add chips
 - View complete order details
-- Calculate total price including tax
+- Calculate total price
 - Generate and save receipt as a `.txt` file
+- Set Sandwich ingredients price form a `.csv` file
 
 ---
 
@@ -60,7 +61,43 @@ Receipt content includes:
 - Total price 
 
 ---
+## Sandwich Price Manager
+Prices for sandwich ingredients are set from a `.csv` file.
 
+The `.csv` file is following format:
+
+
+    SIZE_4_BREAD_PRICE,5.50
+    SIZE_4_MEAT_PRICE,1
+    SIZE_4_EXTRA_MEAT_PRICE,0.5
+    SIZE_4_CHEESE_PRICE,0.75
+    SIZE_4_EXTRA_CHEESE_PRICE,0.3
+    SIZE_8_BREAD_PRICE,7
+    SIZE_8_MEAT_PRICE,2
+    SIZE_8_EXTRA_MEAT_PRICE,1
+    SIZE_8_CHEESE_PRICE,1.5
+    SIZE_8_EXTRA_CHEESE_PRICE,0.6
+    SIZE_12_BREAD_PRICE,8.5
+    SIZE_12_MEAT_PRICE,3
+    SIZE_12_EXTRA_MEAT_PRICE,1.5
+    SIZE_12_CHEESE_PRICE,2.25
+    SIZE_12_EXTRA_CHEESE_PRICE,0.90
+
+Each line represents a key-value pair where:
+
+The key defines the sandwich size and ingredient type.
+The value represents the price for that specific item.
+
+This approach allows prices to be easily updated without changing the code.
+
+
+##### Sandwich File Manager Limitation: 
+- The .csv file must follow the exact KEY,VALUE format and include all required entries.
+- Only predefined sandwich sizes and price types are supported.
+- There is minimal validation, so incorrect or missing data can cause errors or inaccurate pricing.
+- The file must be accessible at the correct path for the system to load successfully.
+
+---
 ## Limitations
 
 - Command-line based user interface
