@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class SandwichPriceManager {
 
-    public static final String SRC_MAIN_RESOURCES_INGREDIENTS_PRICE_CSV = "src/main/resources/IngredientsPrice.csv";
+    private static final String SRC_MAIN_RESOURCES_INGREDIENTS_PRICE_CSV = "src/main/resources/IngredientsPrice.csv";
 
     private static double ingredientPrice(int size, String ingredient){
         try {
@@ -27,6 +27,7 @@ public class SandwichPriceManager {
             throw new RuntimeException( e + "File not found ");
         }
     }
+
 
     public static double getBreadPrice(int size){
         return ingredientPrice(size,"BREAD_PRICE");

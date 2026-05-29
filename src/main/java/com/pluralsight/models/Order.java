@@ -15,7 +15,7 @@ public class Order {
         StringBuilder order = new StringBuilder();
         int count = 1;
         for (Product product : products){
-            order.append(count).append("#\n ").append(product.getProductName()).append("\n");
+            order.append("Item: ").append(count).append("#\n").append(product.getProductName()).append("\n");
             count++;
         }
         order.append("\nYour Total : ").append(getTotalPrice());

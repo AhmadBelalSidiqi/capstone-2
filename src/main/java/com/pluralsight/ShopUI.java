@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ShopUI {
     private Order order;
-    static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public void mainMenu() {
         String menu = """
